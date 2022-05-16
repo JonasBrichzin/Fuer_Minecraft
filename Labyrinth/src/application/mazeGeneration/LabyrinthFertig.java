@@ -1,5 +1,4 @@
-package labyrinthLorenzSimon;
-
+package application.mazeGeneration;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -8,13 +7,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class Laybrinth_fertig {
+public class LabyrinthFertig {
     private int pointX; //Eine Markierung zum Platzieren und Löschen von Blöcken.
     private int pointY;
     private int width; //Breite und Höhe.
     private int height;
     private byte[][] map; //Array zum Speichern der Karte
-    public Laybrinth_fertig(int w, int h) { //Konstrukteur
+    public LabyrinthFertig(int w, int h) { //Konstrukteur
         width = w;
         height = h;
         if (w % 2 != 0 && h % 2 != 0 && 5 <= w && 5 <= h) {
@@ -141,7 +140,7 @@ public class Laybrinth_fertig {
 
     public void build() {
         try {
-            Path labyrinth = Paths.get("PluginTest/res/labyrinth9.mcfunction");
+            Path labyrinth = Paths.get("Labyrinth/res/labyrinth9.mcfunction");
             // Datei anlegen, wenn sie noch nicht existiert
             if (!Files.exists(labyrinth))
                 Files.createFile(labyrinth);
@@ -190,7 +189,7 @@ public class Laybrinth_fertig {
     }
 
     public static void main(String[] args) {
-        Laybrinth_fertig maze=new Laybrinth_fertig(21,21);
+        application.mazeGeneration.LabyrinthFertig maze=new application.mazeGeneration.LabyrinthFertig(21,21);
         maze.build();
         System.out.println(maze.getMaze());
     }
