@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+//Hallo
+
 public class LabyrinthFertig {
     private Integer pointX; //Eine Markierung zum Platzieren und Löschen von Blöcken.
     private Integer pointY;
