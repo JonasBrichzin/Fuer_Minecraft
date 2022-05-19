@@ -8,81 +8,81 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class LabyrinthFertig {
-    private int pointX; //Eine Markierung zum Platzieren und Löschen von Blöcken.
-    private int pointY;
-    private int width; //Breite und Höhe.
-    private int height;
-    private byte[][] map; //Array zum Speichern der Karte
-    public LabyrinthFertig(int w, int h) { //Konstrukteur
+    private Integer pointX; //Eine Markierung zum Platzieren und Löschen von Blöcken.
+    private Integer pointY;
+    private Integer width; //Breite
+    private Integer height; //Höhe
+    private Object[][] map; //Array zum Speichern der Karte
+    public LabyrinthFertig(int w, int h) { //Konstruktor
         width = w;
         height = h;
         if (w % 2 != 0 && h % 2 != 0 && 5 <= w && 5 <= h) {
-            map = new byte[width][height];
-            make();
+            map = new Object[width][height];
+            make();     //make Funktion wird aufgerufen
         } else {
-            System.out.println("Erstellen Sie eine ungerade Zahl von 5 oder mehr vertikal und horizontal.");
+            System.out.println("Sowohl die Höhe und die Breite müssen mindestens größer gleich fünf sein");
         }
     }
 
-    int randomPos(int muki) { //x,Gibt ungerade Zufallskoordinaten für beide y-Koordinaten zurück
+    int randomPos(int muki) {   //x,Gibt ungerade Zufallskoordinaten für beide y-Koordinaten zurück
         int result = 1 + 2 * (int) Math.floor((Math.random() * (muki - 1)) / 2);
         return result;
     }
 
-    private void make() { //Erstellen Sie eine Karte
+    private void make() { //Erstellt eine "Karte" vom Gebiet
 
         pointX = randomPos(width);
         pointY = randomPos(height);
 
-        for (int y = 0; y < height; y++) { //Fülle alles mit einer Wand.
+        for (int y = 0; y < height; y++) { //Komplettes Gebiet (Höhe x Breite) wird mit Wänden ausgefüllt.
             for (int x = 0; x < width; x++) {
-                map[x][y] = 1;
+                map[x][y] = 0;              //von 1 zu 0    zweidimensionales Array map wird komplett mit nullen beschrieben (Wände)
             }
         }
-        map[pointX][pointY] = 0;
-        dig();
+        map[pointX][pointY] = 1;            //von 0 zu 1    an zufälligem Punkt in map wird eine 1 geschrieben (Wand entfernt)
+        dig();      //dig Funktion wird aufgerufen
 
     }
 
     private void dig() {
-        if (isAbleContinueDig() && map[pointX][pointY] == 0) {
-            map[pointX][pointY] = 0;
-            int direction = (int) Math.floor(Math.random() * 4);
+        if (isAbleContinueDig() && map[pointX][pointY].equals(1)) {     //von 0 zu 1    isAbleContinueDig wird aufgerufen und es wird überprüft ob an der Stelle schon 1 ist (Weg)
+            map[pointX][pointY] = 1;                                //von 0 zu 1
+            int direction = (int) Math.floor(Math.random() * 4);    //zufällige Richtung zum weiter graben wird ausgewählt (4 Möglichkeiten)
             switch (direction) {
                 case 0:
                     if (pointY != 1) {
-                        if (map[pointX][pointY - 2] == 1) {
-                            map[pointX][pointY - 1] = 0;
+                        if (map[pointX][pointY - 2].equals(0)) {        //1 zu 0
+                            map[pointX][pointY - 1] = 1;                //0 zu 1
                             pointY -= 2;
                             break;//u
                         }
                     }
                 case 1:
                     if (pointY != height - 2) {
-                        if (map[pointX][pointY + 2] == 1) {
-                            map[pointX][pointY + 1] = 0;
+                        if (map[pointX][pointY + 2].equals(0)) {           //1 zu 0
+                            map[pointX][pointY + 1] = 1;                   // 0 zu 1
                             pointY += 2;
                             break;//d
                         }
                     }
                 case 2:
                     if (pointX != 1) {
-                        if (map[pointX - 2][pointY] == 1) {
-                            map[pointX - 1][pointY] = 0;
+                        if (map[pointX - 2][pointY].equals(0)) {        //1 zu 0
+                            map[pointX - 1][pointY] = 1;                //0 zu 1
                             pointX -= 2;
                             break;//l
                         }
                     }
                 case 3:
                     if (pointX != width - 2) {
-                        if (map[pointX + 2][pointY] == 1) {
-                            map[pointX + 1][pointY] = 0;
+                        if (map[pointX + 2][pointY].equals(0)) {            //1 zu 0
+                            map[pointX + 1][pointY] = 1;                    //0 zu 1
                             pointX += 2;
                             break;//r
                         }
                     }
             }
-            map[pointX][pointY] = 0;
+            map[pointX][pointY] = 1;                                    //0 zu 1
             dig();
         } else if (isAbleDig()) {
             pointX = randomPos(width);
@@ -92,14 +92,14 @@ public class LabyrinthFertig {
 
     }
 
-    private boolean isAbleDig() { //Sehen Sie nach, ob es noch einen Platz zum Graben gibt
+    private boolean isAbleDig() { //Schaut nach, ob es noch einen Platz zum Graben gibt
         boolean result;
         int cnt = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (x % 2 != 0 && y % 2 != 0) {
 
-                    if (map[x][y] != 0) {
+                    if (!map[x][y].equals(1)) {         //0 zu 1
                         cnt++;
                     }
                 }
@@ -113,25 +113,25 @@ public class LabyrinthFertig {
         return result;
     }
 
-    private boolean isAbleContinueDig() {//Stellen Sie fest, ob noch Platz zum Graben in alle Richtungen vorhanden ist
+    private boolean isAbleContinueDig() {   //Stellt fest, ob noch Platz zum Graben in alle Richtungen vorhanden ist
 
         if (pointY != 1) {
-            if (map[pointX][pointY - 2] == 1) {
+            if (map[pointX][pointY - 2].equals(0)) {         // Überprüfe ob von pointY ausgehend noch ein Block ist        //1 zu 0
                 return true;
             }
         }
         if (pointY != height - 2) {
-            if (map[pointX][pointY + 2] == 1) {
+            if (map[pointX][pointY + 2].equals(0)) {        //1 zu 0
                 return true;
             }
         }
         if (pointX != 1) {
-            if (map[pointX - 2][pointY] == 1) {
+            if (map[pointX - 2][pointY].equals(0)) {        //1 zu 0
                 return true;
             }
         }
         if (pointX != width - 2) {
-            if (map[pointX + 2][pointY] == 1) {
+            if (map[pointX + 2][pointY].equals(0)) {        //1 zu 0
                 return true;
             }
         }
@@ -151,8 +151,10 @@ public class LabyrinthFertig {
             //Boden des Labyrinths erzeugen und den Kasten in dem Sich das Labyrinth befindet durch Luft ersetzen, damit es nicht in anderen Struktuern hineingeneriert
             // Und Aus- und Eingang erschaffen
             BufferedWriter meinWriter = Files.newBufferedWriter(labyrinth, StandardOpenOption.APPEND);
-            meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~-1 ~0 minecraft:chiseled_sandstone" + "\n");
-            meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~2 ~0 air" + "\n");
+            meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~-1 ~0 dirt" + "\n");    //Vom Spieler ausgehend
+            meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~2 ~0 air" + "\n");      //Vom Spieler ausgehend
+            //meinWriter.write("fill ~" + (height-1) + " " + (width-1) + " 0 0 0 -1 dirt" + "\n");       //Von 0/0 ausgehend
+            //meinWriter.write("fill ~" + (height-1) + " " + (width-1) + " 0 0 0 -1 air" + "\n");         //Von 0/0 ausgehend
             meinWriter.close();
 
 
@@ -162,21 +164,23 @@ public class LabyrinthFertig {
                 for (int x = 0; x < map.length; x++) {
 
                     meinWriter = Files.newBufferedWriter(labyrinth, StandardOpenOption.APPEND);
-                    if (map[x][y] == 1) {
-                        meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " minecraft:moss_block" + "\n");
+                    if (map[x][y].equals(0)) {                                                                      //1 zu 0
+                        meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " stone" + "\n");       //Vom Spieler ausgehend
+                        //meinWriter.write("fill " + x + " " + y + " 0 " + x + " " + y + " 2 " + "stone" + "\n");     //Von 0/0 ausgehend
                         meinWriter.close();
-                        System.out.print("#");
+                        System.out.print("##");
                     } else {
-                        //meinWriter.write("fill ~" + x + " ~ ~" + y + " ~0 ~-1 ~0 dirt" + "\n");
-                        //meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~0 ~" + y + " air" + "\n");
-                        meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " air" + "\n");
+                        meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " air" + "\n");         //Vom Spieler ausgehend
+                        //meinWriter.write("fill " + x + " " + y + " 0 " + x + " " + y + " 2 " + "air" + "\n");       //Von 0/0 ausgehend
                         meinWriter.close();
-                        System.out.print(" ");
+                        System.out.print("  ");
                     }
                     // Macht Ein- und Ausgang
                     meinWriter = Files.newBufferedWriter(labyrinth, StandardOpenOption.APPEND);
-                    meinWriter.write("fill ~" + 0 + " ~ ~" + 1 + " ~" + 0 + " ~2 ~" + 1 + " air" + "\n");
-                    meinWriter.write("fill ~" + (width-1) + " ~ ~" + (height-2) + " ~" + (width-1) + " ~2 ~" + (height-2) + " air" + "\n");
+                    meinWriter.write("fill ~" + 0 + " ~ ~" + 1 + " ~" + 0 + " ~2 ~" + 1 + " air" + "\n");                                       //Vom Spieler ausgehend
+                    meinWriter.write("fill ~" + (width-1) + " ~ ~" + (height-2) + " ~" + (width-1) + " ~2 ~" + (height-2) + " air" + "\n");     //Vom Spieler ausgehend
+                    //meinWriter.write("fill 0 1 0 0 1 2 air" + "\n");                                                                          //Von 0/0 ausgehend
+                    //meinWriter.write("fill " + (width-1) + " " + (height-2) + " 0 " + (width-1) + (height-2) + " 2 " + "air" + "\n");         //Von 0/0 ausgehend
                     meinWriter.close();
                 }
             }
@@ -184,7 +188,7 @@ public class LabyrinthFertig {
             e.printStackTrace();
         }
     }
-    public byte[][] getMaze() {
+    public Object[][] getMaze() {
         return map;
     }
 
