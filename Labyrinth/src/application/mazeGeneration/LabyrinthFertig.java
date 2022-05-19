@@ -153,10 +153,10 @@ public class LabyrinthFertig {
             //Boden des Labyrinths erzeugen und den Kasten in dem Sich das Labyrinth befindet durch Luft ersetzen, damit es nicht in anderen Struktuern hineingeneriert
             // Und Aus- und Eingang erschaffen
             BufferedWriter meinWriter = Files.newBufferedWriter(labyrinth, StandardOpenOption.APPEND);
-            meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~-1 ~0 dirt" + "\n");    //Vom Spieler ausgehend
-            meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~2 ~0 air" + "\n");      //Vom Spieler ausgehend
-            //meinWriter.write("fill ~" + (height-1) + " " + (width-1) + " 0 0 0 -1 dirt" + "\n");       //Von 0/0 ausgehend
-            //meinWriter.write("fill ~" + (height-1) + " " + (width-1) + " 0 0 0 -1 air" + "\n");         //Von 0/0 ausgehend
+            //meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~-1 ~0 dirt" + "\n");    //Vom Spieler ausgehend
+            //meinWriter.write("fill ~" + (height-1) + " ~ ~" + (width-1) + " ~0 ~2 ~0 air" + "\n");      //Vom Spieler ausgehend
+            meinWriter.write("fill " + (height-1) + " 9 " + (width-1) + " 0 10 0 dirt" + "\n");       //Von 0/0 ausgehend
+            meinWriter.write("fill " + (height-1) + " 10 " + (width-1) + " 0 12 0 air" + "\n");         //Von 0/0 ausgehend
             meinWriter.close();
 
 
@@ -167,22 +167,22 @@ public class LabyrinthFertig {
 
                     meinWriter = Files.newBufferedWriter(labyrinth, StandardOpenOption.APPEND);
                     if (map[x][y].equals(0)) {                                                                      //1 zu 0
-                        meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " stone" + "\n");       //Vom Spieler ausgehend
-                        //meinWriter.write("fill " + x + " " + y + " 0 " + x + " " + y + " 2 " + "stone" + "\n");     //Von 0/0 ausgehend
+                        //meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " stone" + "\n");       //Vom Spieler ausgehend
+                        meinWriter.write("fill " + x + " 10 " + y + " " + x + " 12 " + y + " stone" + "\n");     //Von 0/0 ausgehend
                         meinWriter.close();
                         System.out.print("##");
                     } else {
-                        meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " air" + "\n");         //Vom Spieler ausgehend
-                        //meinWriter.write("fill " + x + " " + y + " 0 " + x + " " + y + " 2 " + "air" + "\n");       //Von 0/0 ausgehend
+                        //meinWriter.write("fill ~" + x + " ~ ~" + y + " ~" + x + " ~2 ~" + y + " air" + "\n");         //Vom Spieler ausgehend
+                        meinWriter.write("fill " + x + " 10 " + y + " " + x + " 12 " + y + " air" + "\n");       //Von 0/0 ausgehend
                         meinWriter.close();
                         System.out.print("  ");
                     }
                     // Macht Ein- und Ausgang
                     meinWriter = Files.newBufferedWriter(labyrinth, StandardOpenOption.APPEND);
-                    meinWriter.write("fill ~" + 0 + " ~ ~" + 1 + " ~" + 0 + " ~2 ~" + 1 + " air" + "\n");                                       //Vom Spieler ausgehend
-                    meinWriter.write("fill ~" + (width-1) + " ~ ~" + (height-2) + " ~" + (width-1) + " ~2 ~" + (height-2) + " air" + "\n");     //Vom Spieler ausgehend
-                    //meinWriter.write("fill 0 1 0 0 1 2 air" + "\n");                                                                          //Von 0/0 ausgehend
-                    //meinWriter.write("fill " + (width-1) + " " + (height-2) + " 0 " + (width-1) + (height-2) + " 2 " + "air" + "\n");         //Von 0/0 ausgehend
+                    //meinWriter.write("fill ~" + 0 + " ~ ~" + 1 + " ~" + 0 + " ~2 ~" + 1 + " air" + "\n");                                       //Vom Spieler ausgehend
+                    //meinWriter.write("fill ~" + (width-1) + " ~ ~" + (height-2) + " ~" + (width-1) + " ~2 ~" + (height-2) + " air" + "\n");     //Vom Spieler ausgehend
+                    meinWriter.write("fill 0 10 1 0 12 1 air" + "\n");                                                                          //Von 0/0 ausgehend
+                    meinWriter.write("fill " + (width-1) + " 10 " + (height-2) + " " + (width-1) + " 12 " + (height-2) + " air" + "\n");         //Von 0/0 ausgehend
                     meinWriter.close();
                 }
             }
