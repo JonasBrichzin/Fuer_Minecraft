@@ -7,6 +7,17 @@ import java.util.Set;
 
 public class GraphKnoten {
 	private String name;
+	private double xKoordinate;
+	private double yKoordiante;
+	private double zKoordinate;
+
+	public GraphKnoten(String name, float xKoordinate, float zKoordinate) {
+		this.name = name;
+		this.xKoordinate = xKoordinate;
+		this.yKoordiante = -60.0;
+		this.zKoordinate = zKoordinate;
+	}
+
 	private Set<GraphKnoten> nachbarn = new HashSet<GraphKnoten>();
 	private boolean markiert;
 	private List<GraphKnoten> suchPfad = new ArrayList<GraphKnoten>();

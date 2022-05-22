@@ -41,7 +41,6 @@ public class KuerzesterWeg {
             String zeile = reader.readLine();
             for (int spalte = 0; spalte < labyrinthGroesse; spalte++){
                 for(int reihe = 0; reihe < labyrinthGroesse; reihe++){
-                    //System.out.println(zeile);
                     if (zeile != null){
                         labyrinth [reihe][spalte] = Integer.parseInt(zeile);
                         zeile = reader.readLine();
@@ -63,7 +62,8 @@ public class KuerzesterWeg {
                 if (wert == 1 ) {
                     GraphKnoten knoten = labyrinthKnoten[zeile][spalte];
                     if (knoten == null) {
-                        knoten = new GraphKnoten("Position:" + spalte + "," + zeile);
+                        String nameKnoten = zeile + "/-60/" + spalte;
+                        knoten = new GraphKnoten(nameKnoten,zeile, spalte);
                         labyrinthKnoten[zeile][spalte] = knoten;
                     }
                     pruefeNachbar(labyrinthKnoten, zeile, spalte, zeile - 1, spalte);
