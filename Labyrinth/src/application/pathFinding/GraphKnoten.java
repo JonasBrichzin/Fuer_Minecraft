@@ -8,7 +8,6 @@ import java.util.Set;
 public class GraphKnoten {
 	private String name;
 	private Set<GraphKnoten> nachbarn = new HashSet<GraphKnoten>();
-	// ToDo a)2.: neue Attribut: markiert (boolean) und suchPfad (Liste von GraphKnoten)
 	private boolean markiert;
 	private List<GraphKnoten> suchPfad = new ArrayList<GraphKnoten>();
 
@@ -41,7 +40,6 @@ public class GraphKnoten {
 	}
 	
 	public void addNachbar(GraphKnoten nachbar) {
-		// ToDo a)1.: Setzen der Bidirektionalen Beziehung zum Nachbarn und zurück
 		nachbarn.add(nachbar);
 		nachbar.nachbarn.add(this);
 	}

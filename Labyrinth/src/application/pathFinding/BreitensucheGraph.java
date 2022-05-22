@@ -13,8 +13,8 @@ public class BreitensucheGraph {
         Queue<GraphKnoten> q = new LinkedList<GraphKnoten>();
         q.add(startKnoten);
 
-        // ToDo c)1: StartKnoten markieren (Methode setMarkiert verwenden)
-        startKnoten.setMarkiert(true);
+
+        startKnoten.setMarkiert(true);                                                                // StartKnoten markieren
 
         while (!q.isEmpty() && ergebnisPfad.isEmpty()) {
             GraphKnoten aktuellerKnoten = q.remove();
